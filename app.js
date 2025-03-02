@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Show register card
             registerCard.classList.remove('hidden');
             
-            // Pre-fill year, month, day with default values
+            // fill year,month,day
             yearInput.value = '1992';
             monthInput.value = '06';
             dayInput.value = '20';
