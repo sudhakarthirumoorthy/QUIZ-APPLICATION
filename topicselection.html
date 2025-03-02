@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Application</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #ffccff, #99ccff);
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: linear-gradient(to right, #ff4d94, #3366ff);
+            color: white;
+            padding: 20px;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        }
+        .quiz-selection {
+            margin: 50px auto;
+            padding: 30px;
+            background: white;
+            width: 60%;
+            border-radius: 15px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+        }
+        .quiz-selection:hover {
+            transform: scale(1.02);
+        }
+        .subjects {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .subject {
+            background: linear-gradient(to right, #ff80bf, #6699ff);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .subject:hover {
+            background: linear-gradient(to right, #ff3385, #3366ff);
+            transform: scale(1.05);
+        }
+        footer {
+            margin-top: 30px;
+            padding: 15px;
+            background: linear-gradient(to right, #3366ff, #ff4d94);
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to the Quiz Application</h1>
+    </header>
+    <main>
+        <section class="quiz-selection">
+            <h2>Select a Topic to Start the Quiz</h2>
+            <div class="subjects">
+                <button class="subject">HTML</button>
+                <button class="subject">CSS</button>
+                <button class="subject">JavaScript</button>
+                <button class="subject">Java</button>
+                <button class="subject">Python</button>
+                <button class="subject">C</button>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 Quiz Application</p>
+    </footer>
+</body>
+</html>
