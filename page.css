@@ -95,7 +95,7 @@ input:focus {
     align-items: center;
     cursor: pointer;
     
-  
+    transition: background-color 0.3s;
 }
 
 .button:hover {
