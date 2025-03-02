@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Master - Registration</title>
+    <link rel="stylesheet" href="page.css">
+</head>
+<body>
+    <div class="div1">
+        <div class="card login-card">
+            <div class="logo">
+                <img src="https://www.shutterstock.com/shutterstock/photos/2052894734/display_1500/stock-vector-quiz-and-question-marks-trivia-night-quiz-symbol-neon-sign-night-online-game-with-questions-2052894734.jpg" alt="logo" width="150" >
+            </div>
+            <h2>Quiz Master</h2>
+            <p>Enter your email</p>
+            <div class="input-group">
+                <input type="email" id="email" placeholder="Email">
+                <button class="button" id="next-btn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 5L20 12L13 19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M4 12H20" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="card register-card hidden">
+            <div class="wave-top"></div>
+            <h2>Register</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="firstName">First Name</label>
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastName">Last Name</label>
+                    <input type="text" id="lastName" placeholder="Last Name" required>
+                </div>
+                <div class="form-group">
+                    <label for="dob">DOB (Date Of Birth)</label>
+                    <div class="dob-inputs">
+                        <input type="text" id="year" placeholder="YYYY" maxlength="4" required>
+                        <input type="text" id="month" placeholder="MM" maxlength="2" required>
+                        <input type="text" id="day" placeholder="DD" maxlength="2" required>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
