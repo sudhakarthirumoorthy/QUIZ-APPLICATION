@@ -8,23 +8,29 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            background: linear-gradient(to right, #ffccff, #99ccff);
+            background: url('background.jpeg') no-repeat center center fixed;
+            background-size: cover;
             text-align: center;
             margin: 0;
             padding: 0;
+            color: #FFB6C1; /* Soft Pink Text */
         }
-        header {
-            background: linear-gradient(to right, #ff4d94, #3366ff);
-            color: white;
+        header, footer {
+            background: linear-gradient(to right, #6a0dad, #8a2be2);
+            color: #FFB6C1; /* Soft Pink Header & Footer Text */
             padding: 20px;
             font-size: 28px;
             font-weight: bold;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            margin-top: 0; /* Ensures no extra spacing above */
+        }
+        h1 {
+            margin: 0; /* Removes any default margin */
         }
         .quiz-selection {
             margin: 50px auto;
             padding: 30px;
-            background: white;
+            background: rgba(216, 191, 216, 0.9); /* Soft Lavender */
             width: 60%;
             border-radius: 15px;
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
@@ -33,14 +39,17 @@
         .quiz-selection:hover {
             transform: scale(1.02);
         }
+        h2 {
+            color: #4B0082; /* Deep Purple Title */
+        }
         .subjects {
             display: flex;
             flex-direction: column;
             gap: 20px;
         }
         .subject {
-            background: linear-gradient(to right, #ff80bf, #6699ff);
-            color: white;
+            background: linear-gradient(to right, #800080, #4b0082);
+            color: #FFB6C1; /* Soft Pink Button Text */
             border: none;
             padding: 15px;
             font-size: 20px;
@@ -51,14 +60,14 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
         .subject:hover {
-            background: linear-gradient(to right, #ff3385, #3366ff);
+            background: linear-gradient(to right, #6a0dad, #9932cc);
             transform: scale(1.05);
         }
         footer {
             margin-top: 30px;
             padding: 15px;
-            background: linear-gradient(to right, #3366ff, #ff4d94);
-            color: white;
+            background: linear-gradient(to right, #8a2be2, #6a0dad);
+            color: #FFB6C1; /* Soft Pink Footer Text */
             font-size: 16px;
             font-weight: bold;
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
