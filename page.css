@@ -12,6 +12,7 @@ body {
     justify-content: center;
     align-items: center;
     padding: 20px;
+    background-image: url(https://t4.ftcdn.net/jpg/03/09/44/57/360_F_309445752_htXY7HAUYQsx8mD8zhmHgdtgaxyUUSx2.jpg);
 }
 
 .div1 {
@@ -94,11 +95,16 @@ input:focus {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    
     transition: background-color 0.3s;
 }
 
 .button:hover {
-    background-color: #c2185b;
+    background-color: #4a0621;
+    transform: translateY(-20px);
+   border-bottom: 2px solid rgb(2, 2, 2);
+   
+
 }
 
 .form-group {
@@ -132,12 +138,18 @@ label {
     width: 100%;
     font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
     margin-top: 10px;
+    transition: transform 0.2s ease ;
+
+    
 }
 
 .submit-btn:hover {
-    background-color: #c2185b;
+    background-color: #4a0621;
+    border-bottom: 2px solid rgb(5, 5, 5);
+    transform: translateY(-5px);
+
 }
 
 .hidden {
