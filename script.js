@@ -8,4 +8,4 @@ const interval = setInterval(() => {
   if (i > text.length) {
     clearInterval(interval);
   }
-}, 50);
+}, 150);
