@@ -1,0 +1,172 @@
+<!-- cpp quiz questions -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C++ Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff69b4, #800080);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            background: white;
+            color: black;
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ffb6c1;
+            transition: 0.3s;
+        }
+        .option:hover {
+            background: #ff69b4;
+        }
+        .correct {
+            background: green !important;
+            color: white;
+        }
+        .wrong {
+            background: red !important;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        #timer {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #800080;
+        }
+        #next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #800080;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #next-btn:hover {
+            background: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="timer">Time Left: <span id="time">30</span>s</div>
+        <div id="question-container">
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+        </div>
+        <button id="next-btn" class="hidden" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Which of the following is a valid C++ data type?", options: ["int", "float", "bool", "All of the above"], answer: 3 },
+            { q: "What is used to define a constant in C++?", options: ["static", "const", "final", "constant"], answer: 1 },
+            { q: "Which symbol is used for single-line comments in C++?", options: ["//", "/*", "#", "--"], answer: 0 },
+            { q: "Which loop always executes at least once?", options: ["for", "while", "do-while", "foreach"], answer: 2 },
+            { q: "What is the correct syntax to declare an array in C++?", options: ["int arr();", "int arr[];", "array<int> arr;", "All of the above"], answer: 1 },
+            { q: "Which of the following is NOT a C++ access specifier?", options: ["public", "private", "protected", "global"], answer: 3 },
+            { q: "What will 'cout << 2 + 2;' output?", options: ["'2+2'", "4", "'4'", "Error"], answer: 1 },
+            { q: "Which keyword is used for a class in C++?", options: ["class", "structure", "type", "define"], answer: 0 },
+            { q: "Which of the following is the address-of operator?", options: ["*", "&", "%", "@"], answer: 1 },
+            { q: "What is the default value of an uninitialized pointer?", options: ["null", "0", "nullptr", "Undefined"], answer: 3 },
+            { q: "Which function is used to allocate memory dynamically?", options: ["malloc()", "new", "alloc()", "create()"], answer: 1 },
+            { q: "Which keyword is used to handle exceptions in C++?", options: ["catch", "try", "throw", "All of the above"], answer: 3 },
+            { q: "What does 'cin' do in C++?", options: ["Output data", "Input data", "Create variables", "Compile code"], answer: 1 },
+            { q: "Which header file is needed for input/output operations?", options: ["<iostream>", "<fstream>", "<iomanip>", "<string>"], answer: 0 },
+            { q: "How do you declare a pointer?", options: ["int ptr;", "int *ptr;", "*ptr;", "pointer<int> ptr;"], answer: 1 },
+            { q: "What is used to return multiple values from a function?", options: ["void", "array", "tuple", "return"], answer: 2 },
+            { q: "Which operator is used for inheritance?", options: [":", "::", "->", "=>"], answer: 0 },
+            { q: "Which of the following is NOT a C++ keyword?", options: ["volatile", "extern", "package", "mutable"], answer: 2 },
+            { q: "What will 'cout << (5 / 2);' output?", options: ["2.5", "3", "2", "2.0"], answer: 2 },
+            { q: "Which loop is used when the number of iterations is known?", options: ["while", "do-while", "for", "foreach"], answer: 2 }
+        ];
+
+        let currentQuestion = 0;
+        let timeLeft = 30;
+        let timer;
+
+        function loadQuestion() {
+            clearInterval(timer);
+            timeLeft = 30;
+            document.getElementById("time").innerText = timeLeft;
+            timer = setInterval(countdown, 1000);
+
+            const questionData = questions[currentQuestion];
+            document.getElementById("question").innerText = questionData.q;
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            questionData.options.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.classList.add("option");
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById("next-btn").classList.add("hidden");
+        }
+
+        function countdown() {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft === 0) {
+                nextQuestion();
+            }
+        }
+
+        function checkAnswer(index, btn) {
+            clearInterval(timer);
+            const correctIndex = questions[currentQuestion].answer;
+            document.querySelectorAll(".option").forEach((button, i) => {
+                button.disabled = true;
+                if (i === correctIndex) {
+                    button.classList.add("correct");
+                } else if (i === index) {
+                    button.classList.add("wrong");
+                }
+            });
+            document.getElementById("next-btn").classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.querySelector(".quiz-container").innerHTML = "<h2>Quiz Completed!</h2>";
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>

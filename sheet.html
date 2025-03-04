@@ -1,0 +1,172 @@
+<!-- javascript quiz questions -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JavaScript Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff69b4, #800080);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            background: white;
+            color: black;
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ffb6c1;
+            transition: 0.3s;
+        }
+        .option:hover {
+            background: #ff69b4;
+        }
+        .correct {
+            background: green !important;
+            color: white;
+        }
+        .wrong {
+            background: red !important;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        #timer {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #800080;
+        }
+        #next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #800080;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #next-btn:hover {
+            background: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="timer">Time Left: <span id="time">30</span>s</div>
+        <div id="question-container">
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+        </div>
+        <button id="next-btn" class="hidden" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "Which keyword is used to declare a variable in JavaScript?", options: ["var", "let", "const", "All of the above"], answer: 3 },
+            { q: "What does 'typeof null' return?", options: ["null", "object", "undefined", "string"], answer: 1 },
+            { q: "Which function is used to print to the console?", options: ["console.log()", "print()", "log()", "display()"], answer: 0 },
+            { q: "What is the correct syntax for an arrow function?", options: ["()=>{}", "function=>{}", "(){}", "function(){}"], answer: 0 },
+            { q: "Which JavaScript loop executes at least once?", options: ["for", "while", "do-while", "foreach"], answer: 2 },
+            { q: "What is the output of '2' + 2 in JavaScript?", options: ["4", "'22'", "NaN", "Error"], answer: 1 },
+            { q: "Which method removes the last element from an array?", options: ["pop()", "remove()", "delete()", "splice()"], answer: 0 },
+            { q: "What is used to handle exceptions in JavaScript?", options: ["try-catch", "if-else", "throw-catch", "error handling"], answer: 0 },
+            { q: "Which operator is used for strict equality?", options: ["=", "==", "===", "!="], answer: 2 },
+            { q: "What is the default value of an uninitialized variable?", options: ["null", "undefined", "0", "NaN"], answer: 1 },
+            { q: "Which object method returns the keys of an object?", options: ["Object.values()", "Object.keys()", "Object.entries()", "Object.getKeys()"], answer: 1 },
+            { q: "Which keyword is used to declare a constant?", options: ["static", "const", "final", "constant"], answer: 1 },
+            { q: "How do you convert a string to a number in JavaScript?", options: ["parseInt()", "Number()", "Both A and B", "toInteger()"], answer: 2 },
+            { q: "Which of the following is a falsy value?", options: ["0", "null", "undefined", "All of the above"], answer: 3 },
+            { q: "Which function is used to execute a function after a delay?", options: ["setTimeout()", "setInterval()", "wait()", "delay()"], answer: 0 },
+            { q: "Which symbol is used to define a template literal?", options: ["'", '"', "`", "%"], answer: 2 },
+            { q: "What does JSON stand for?", options: ["JavaScript Object Notation", "Java Serialized Object Notation", "JavaScript Oriented Notation", "None"], answer: 0 },
+            { q: "Which event occurs when a user clicks on an HTML element?", options: ["onhover", "onchange", "onclick", "onpress"], answer: 2 },
+            { q: "How do you check if a variable is an array?", options: ["typeof", "isArray()", "instanceof", "Both B and C"], answer: 3 },
+            { q: "What is the correct way to write a JavaScript array?", options: ["{1,2,3}", "[1,2,3]", "(1,2,3)", "array(1,2,3)"], answer: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let timeLeft = 30;
+        let timer;
+
+        function loadQuestion() {
+            clearInterval(timer);
+            timeLeft = 30;
+            document.getElementById("time").innerText = timeLeft;
+            timer = setInterval(countdown, 1000);
+
+            const questionData = questions[currentQuestion];
+            document.getElementById("question").innerText = questionData.q;
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            questionData.options.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.classList.add("option");
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById("next-btn").classList.add("hidden");
+        }
+
+        function countdown() {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft === 0) {
+                nextQuestion();
+            }
+        }
+
+        function checkAnswer(index, btn) {
+            clearInterval(timer);
+            const correctIndex = questions[currentQuestion].answer;
+            document.querySelectorAll(".option").forEach((button, i) => {
+                button.disabled = true;
+                if (i === correctIndex) {
+                    button.classList.add("correct");
+                } else if (i === index) {
+                    button.classList.add("wrong");
+                }
+            });
+            document.getElementById("next-btn").classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.querySelector(".quiz-container").innerHTML = "<h2>Quiz Completed!</h2>";
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
