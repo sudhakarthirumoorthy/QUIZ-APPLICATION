@@ -1,0 +1,75 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('background.jpeg') no-repeat center center fixed;
+    background-size: cover;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    color: #FFB6C1; /* Soft Pink Text */
+}
+
+header {
+    background: none; /* Removes purple gradient */
+    color: #FFB6C1; /* Soft Pink Text */
+    padding: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    text-shadow: none; /* Removes text shadow */
+    margin-top: 0;
+}
+
+h1 {
+    margin: 0; /* Removes any default margin */
+}
+
+.quiz-selection {
+    margin: 50px auto;
+    padding: 30px;
+    background: rgba(216, 191, 216, 0.9); /* Soft Lavender */
+    width: 60%;
+    border-radius: 15px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+.quiz-selection:hover {
+    transform: scale(1.02);
+}
+
+h2 {
+    color: #4B0082; /* Deep Purple Title */
+}
+
+.subjects {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.subject {
+    background: linear-gradient(to right, #800080, #4b0082);
+    color: #FFB6C1; /* Soft Pink Button Text */
+    border: none;
+    padding: 15px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.subject:hover {
+    background: linear-gradient(to right, #6a0dad, #9932cc);
+    transform: scale(1.05);
+}
+
+footer {
+    margin-top: 30px;
+    padding: 15px;
+    background: linear-gradient(to right, #8a2be2, #6a0dad);
+    color: #FFB6C1; /* Soft Pink Footer Text */
+    font-size: 16px;
+    font-weight: bold;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
