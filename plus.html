@@ -1,0 +1,172 @@
+<!-- quiz python questions -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff69b4, #800080);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            background: white;
+            color: black;
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ffb6c1;
+            transition: 0.3s;
+        }
+        .option:hover {
+            background: #ff69b4;
+        }
+        .correct {
+            background: green !important;
+            color: white;
+        }
+        .wrong {
+            background: red !important;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        #timer {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #800080;
+        }
+        #next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #800080;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #next-btn:hover {
+            background: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="timer">Time Left: <span id="time">30</span>s</div>
+        <div id="question-container">
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+        </div>
+        <button id="next-btn" class="hidden" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "What is the output of print(2 ** 3)?", options: ["5", "6", "8", "9"], answer: 2 },
+            { q: "Which keyword is used to define a function in Python?", options: ["func", "define", "def", "function"], answer: 2 },
+            { q: "Which data type is mutable?", options: ["Tuple", "String", "List", "Integer"], answer: 2 },
+            { q: "What will print(type([])) return?", options: ["<class 'list'>", "<class 'dict'>", "<class 'set'>", "<class 'tuple'>"], answer: 0 },
+            { q: "What does len(['a', 'b', 'c']) return?", options: ["2", "3", "4", "None"], answer: 1 },
+            { q: "What is the output of print(bool(0))?", options: ["True", "False", "None", "Error"], answer: 1 },
+            { q: "Which loop runs at least once?", options: ["for", "while", "do-while", "if"], answer: 2 },
+            { q: "Which module is used for regular expressions?", options: ["regex", "re", "reg", "expr"], answer: 1 },
+            { q: "How do you start a comment in Python?", options: ["//", "/* */", "#", "--"], answer: 2 },
+            { q: "Which operator is used for exponentiation?", options: ["^", "", "//", "*"], answer: 1 },
+            { q: "What does 'is' compare?", options: ["Values", "Memory locations", "Types", "Lengths"], answer: 1 },
+            { q: "What does int('10') return?", options: ["'10'", "10.0", "10", "Error"], answer: 2 },
+            { q: "Which function converts a string to lowercase?", options: ["lower()", "LOWER()", "tolower()", "strlow()"], answer: 0 },
+            { q: "Which is a valid variable name?", options: ["1name", "_name", "name!", "class"], answer: 1 },
+            { q: "Which method removes the last element from a list?", options: ["remove()", "delete()", "pop()", "clear()"], answer: 2 },
+            { q: "Which keyword is used for loops?", options: ["loop", "for", "repeat", "iterate"], answer: 1 },
+            { q: "Which statement is used to exit a loop?", options: ["stop", "exit", "break", "end"], answer: 2 },
+            { q: "Which data type is immutable?", options: ["List", "Dictionary", "Tuple", "Set"], answer: 2 },
+            { q: "What will print(5 // 2) output?", options: ["2.5", "3", "2", "Error"], answer: 2 },
+            { q: "Which function gives the absolute value?", options: ["abs()", "absolute()", "fabs()", "math.abs()"], answer: 0 }
+        ];
+
+        let currentQuestion = 0;
+        let timeLeft = 30;
+        let timer;
+
+        function loadQuestion() {
+            clearInterval(timer);
+            timeLeft = 30;
+            document.getElementById("time").innerText = timeLeft;
+            timer = setInterval(countdown, 1000);
+
+            const questionData = questions[currentQuestion];
+            document.getElementById("question").innerText = questionData.q;
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            questionData.options.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.classList.add("option");
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById("next-btn").classList.add("hidden");
+        }
+
+        function countdown() {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft === 0) {
+                nextQuestion();
+            }
+        }
+
+        function checkAnswer(index, btn) {
+            clearInterval(timer);
+            const correctIndex = questions[currentQuestion].answer;
+            document.querySelectorAll(".option").forEach((button, i) => {
+                button.disabled = true;
+                if (i === correctIndex) {
+                    button.classList.add("correct");
+                } else if (i === index) {
+                    button.classList.add("wrong");
+                }
+            });
+            document.getElementById("next-btn").classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.querySelector(".quiz-container").innerHTML = "<h2>Quiz Completed!</h2>";
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>

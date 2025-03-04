@@ -1,0 +1,172 @@
+<!-- java quiz questios 20 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Quiz</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(to right, #ff69b4, #800080);
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+        .quiz-container {
+            background: white;
+            color: black;
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        }
+        .question {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .option {
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #ffb6c1;
+            transition: 0.3s;
+        }
+        .option:hover {
+            background: #ff69b4;
+        }
+        .correct {
+            background: green !important;
+            color: white;
+        }
+        .wrong {
+            background: red !important;
+            color: white;
+        }
+        .hidden {
+            display: none;
+        }
+        #timer {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #800080;
+        }
+        #next-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: none;
+            background: #800080;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #next-btn:hover {
+            background: #ff69b4;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div id="timer">Time Left: <span id="time">30</span>s</div>
+        <div id="question-container">
+            <div class="question" id="question"></div>
+            <div class="options" id="options"></div>
+        </div>
+        <button id="next-btn" class="hidden" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <script>
+        const questions = [
+            { q: "What is the size of int in Java?", options: ["2 bytes", "4 bytes", "8 bytes", "Depends on system"], answer: 1 },
+            { q: "Which keyword is used to create a subclass?", options: ["extends", "implements", "inherits", "super"], answer: 0 },
+            { q: "Which of these is not a Java access modifier?", options: ["public", "protected", "private", "extern"], answer: 3 },
+            { q: "What is the default value of a boolean in Java?", options: ["true", "false", "null", "0"], answer: 1 },
+            { q: "Which function is used to print in Java?", options: ["System.out.println()", "print()", "echo()", "display()"], answer: 0 },
+            { q: "Which operator is used for comparison?", options: ["=", "==", "===", "!="], answer: 1 },
+            { q: "Which data type is used for a single character?", options: ["String", "char", "Character", "Text"], answer: 1 },
+            { q: "Which loop runs at least once?", options: ["for", "while", "do-while", "foreach"], answer: 2 },
+            { q: "Which keyword is used to define a constant?", options: ["static", "const", "final", "constant"], answer: 2 },
+            { q: "Which method is called automatically in Java?", options: ["start()", "run()", "main()", "init()"], answer: 2 },
+            { q: "What does JVM stand for?", options: ["Java Virtual Machine", "Java Visual Machine", "Java Variable Machine", "None"], answer: 0 },
+            { q: "Which package is imported by default?", options: ["java.io", "java.util", "java.lang", "java.net"], answer: 2 },
+            { q: "How do you declare an array in Java?", options: ["int[] arr;", "array int arr;", "int arr[];", "Both A and C"], answer: 3 },
+            { q: "Which exception is thrown when a class is not found?", options: ["IOException", "ClassNotFoundException", "RuntimeException", "IndexOutOfBoundsException"], answer: 1 },
+            { q: "Which keyword is used to inherit a class?", options: ["super", "extends", "implements", "inherit"], answer: 1 },
+            { q: "What is used to handle exceptions in Java?", options: ["try-catch", "if-else", "throw-catch", "error handling"], answer: 0 },
+            { q: "Which keyword is used to define an interface?", options: ["class", "interface", "abstract", "extends"], answer: 1 },
+            { q: "Which of these is not a primitive data type?", options: ["int", "boolean", "char", "String"], answer: 3 },
+            { q: "Which keyword is used to call a parent class constructor?", options: ["this", "super", "parent", "base"], answer: 1 },
+            { q: "What will System.out.println(5/2) output?", options: ["2.5", "3", "2", "2.0"], answer: 2 }
+        ];
+
+        let currentQuestion = 0;
+        let timeLeft = 30;
+        let timer;
+
+        function loadQuestion() {
+            clearInterval(timer);
+            timeLeft = 30;
+            document.getElementById("time").innerText = timeLeft;
+            timer = setInterval(countdown, 1000);
+
+            const questionData = questions[currentQuestion];
+            document.getElementById("question").innerText = questionData.q;
+
+            const optionsContainer = document.getElementById("options");
+            optionsContainer.innerHTML = "";
+
+            questionData.options.forEach((option, index) => {
+                const btn = document.createElement("button");
+                btn.classList.add("option");
+                btn.innerText = option;
+                btn.onclick = () => checkAnswer(index, btn);
+                optionsContainer.appendChild(btn);
+            });
+
+            document.getElementById("next-btn").classList.add("hidden");
+        }
+
+        function countdown() {
+            timeLeft--;
+            document.getElementById("time").innerText = timeLeft;
+            if (timeLeft === 0) {
+                nextQuestion();
+            }
+        }
+
+        function checkAnswer(index, btn) {
+            clearInterval(timer);
+            const correctIndex = questions[currentQuestion].answer;
+            document.querySelectorAll(".option").forEach((button, i) => {
+                button.disabled = true;
+                if (i === correctIndex) {
+                    button.classList.add("correct");
+                } else if (i === index) {
+                    button.classList.add("wrong");
+                }
+            });
+            document.getElementById("next-btn").classList.remove("hidden");
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.querySelector(".quiz-container").innerHTML = "<h2>Quiz Completed!</h2>";
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>

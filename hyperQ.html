@@ -1,0 +1,151 @@
+
+<!-- html quiz questions -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz App</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #d16ba5, #86a8e7);
+            font-family: Arial, sans-serif;
+        }
+        .quiz-container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            color: #fff;
+            width: 80%;
+            max-width: 500px;
+        }
+        .timer {
+            background: purple;
+            color: #fff;
+            padding: 5px 10px;
+            border-radius: 10px;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+        .option {
+            display: block;
+            margin: 10px 0;
+            padding: 10px;
+            background: white;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        .option.correct { background: green; color: white; }
+        .option.wrong { background: red; color: white; }
+        .next-btn {
+            background: red;
+            color: white;
+            padding: 10px;
+            border: none;
+            cursor: pointer;
+            margin-top: 10px;
+            display: none;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <h2> Html Quiz</h2>
+        <div class="timer">Time: <span id="time">30</span></div>
+        <p id="question"></p>
+        <div id="options"></div>
+        <button class="next-btn" onclick="nextQuestion()">Next</button>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "What does HTML stand for?", options: ["Hyperlinks Text Markup Language", "Hyper  Text Markup Language", "Home Tool Markup Language", "Hyper Transfer Markup Language"], answer:  1},
+            { question: "Which HTML tag is used to define an internal style sheet?", options: ["<style>", "<script>", "<css>", "<link>"], answer: 0 },
+            { question: "Which HTML tag is used to create a hyperlink?", options: ["<hyper>", "<link>", "<href>", "<a>"], answer: 3 },
+            { question: "Which attribute is used to provide alternative text for an image?", options: ["alt", "src", "title", "href"], answer: 0 },
+            { question: "Which HTML tag is used to define a table row?", options: ["<table>", "<td>", "<tr>", "<th>"], answer: 2 },
+            { question: "Which tag is used to define a division or a section in HTML?", options: ["<div>", "<section>", "<span>", "<article>"], answer: 0 },
+            { question: "What is the correct HTML element for inserting a line break?", options: ["<br>", "<break>", "<lb>", "<newline>"], answer: 0 },
+            { question: "Which tag is used to define an unordered list?", options: ["<ol>", "<ul>", "<li>", "<list>"], answer: 1 },
+            { question: "What is the correct HTML for inserting an image?", options: ["<img src='image.jpg'>", "<image>image.jpg</image>", "<img>image.jpg</img>", "<pic>image.jpg</pic>"], answer: 0 },
+            { question: "Which tag is used to define the largest heading?", options: ["<head>", "<h6>", "<h1>", "<title>"], answer: 2 },
+            { question: "Which attribute specifies a unique id for an HTML element?", options: ["style", "class", "name", "id"], answer: 3 },
+            { question: "Which tag is used for ordered lists?", options: ["<ul>", "<ol>", "<li>", "<order>"], answer: 2 },
+            { question: "Which element is used to define emphasized text?", options: ["<em>", "<strong>", "<bold>", "<i>"], answer: 0 },
+            { question: "What is the correct HTML for creating a radio button?", options: ["<input type='radio'>", "<radio>", "<input radio>", "<radiobutton>"], answer: 0 },
+            { question: "Which HTML tag is used to define a footer for a document?", options: ["<end>", "<bottom>", "<foot>", "<footer>"], answer: 3 },
+            { question: "Which tag is used to define an HTML form?", options: ["<form>", "<input>", "<submit>", "<action>"], answer: 0 },
+            { question: "Which attribute is used to open a hyperlink in a new window?", options: ["target='_blank'", "new='_window'", "href='_new'", "window='_blank'"], answer: 0 },
+            { question: "Which HTML tag is used to define metadata about an HTML document?", options: ["<meta>", "<head>", "<info>", "<script>"], answer: 0 },
+            { question: "Which element is used to define important text?", options: ["<strong>", "<b>", "<i>", "<important>"], answer: 0 },
+            { question: "What is the correct HTML for adding a background color?", options: ["<body style='background-color:yellow;'>", "<background>yellow</background>", "<body bg='yellow'>", "<bg color='yellow'>"], answer: 0 }
+        ];
+
+        let currentQuestion = 0;
+        let timeLeft = 30;
+        let timer;
+
+        function startTimer() {
+            timeLeft = 30;
+            document.getElementById("time").innerText = timeLeft;
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById("time").innerText = timeLeft;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    document.querySelectorAll(".option").forEach(btn => btn.disabled = true);
+                    document.querySelector(".next-btn").style.display = "block"; // Show next button when time runs out
+                }
+            }, 1000);
+        }
+
+        function loadQuestion() {
+            clearInterval(timer);
+            startTimer();
+            document.querySelector(".next-btn").style.display = "none";
+            const q = questions[currentQuestion];
+            document.getElementById("question").innerText = q.question;
+            document.getElementById("options").innerHTML = "";
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement("button");
+                btn.classList.add("option");
+                btn.innerText = opt;
+                btn.onclick = () => checkAnswer(index);
+                document.getElementById("options").appendChild(btn);
+            });
+        }
+
+        function checkAnswer(index) {
+            clearInterval(timer);
+            const correctIndex = questions[currentQuestion].answer;
+            document.querySelectorAll(".option").forEach((btn, i) => {
+                btn.disabled = true;
+                if (i === correctIndex) btn.classList.add("correct");
+                else if (i === index) btn.classList.add("wrong");
+            });
+            document.querySelector(".next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                document.querySelector(".quiz-container").innerHTML = "<h2>Quiz Completed!</h2>";
+            }
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
