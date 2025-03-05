@@ -60,7 +60,7 @@
 </head>
 <body>
     <div class="quiz-container">
-        <h2> Html Quiz</h2>
+        <h2> HTML Quiz </h2>
         <div class="timer">Time: <span id="time">30</span></div>
         <p id="question"></p>
         <div id="options"></div>
@@ -69,7 +69,7 @@
 
     <script>
         const questions = [
-            { question: "What does HTML stand for?", options: ["Hyperlinks Text Markup Language", "Hyper  Text Markup Language", "Home Tool Markup Language", "Hyper Transfer Markup Language"], answer:  1},
+            { question: "What does HTML stand for?", options: ["Hyperlinks Text Markup Language", "Hyper Text Markup Language", "Home Tool Markup Language", "Hyper Transfer Markup Language"], answer: 1 },
             { question: "Which HTML tag is used to define an internal style sheet?", options: ["<style>", "<script>", "<css>", "<link>"], answer: 0 },
             { question: "Which HTML tag is used to create a hyperlink?", options: ["<hyper>", "<link>", "<href>", "<a>"], answer: 3 },
             { question: "Which attribute is used to provide alternative text for an image?", options: ["alt", "src", "title", "href"], answer: 0 },
@@ -80,7 +80,7 @@
             { question: "What is the correct HTML for inserting an image?", options: ["<img src='image.jpg'>", "<image>image.jpg</image>", "<img>image.jpg</img>", "<pic>image.jpg</pic>"], answer: 0 },
             { question: "Which tag is used to define the largest heading?", options: ["<head>", "<h6>", "<h1>", "<title>"], answer: 2 },
             { question: "Which attribute specifies a unique id for an HTML element?", options: ["style", "class", "name", "id"], answer: 3 },
-            { question: "Which tag is used for ordered lists?", options: ["<ul>", "<ol>", "<li>", "<order>"], answer: 2 },
+            { question: "Which tag is used for ordered lists?", options: ["<ul>", "<ol>", "<li>", "<order>"], answer: 1 },
             { question: "Which element is used to define emphasized text?", options: ["<em>", "<strong>", "<bold>", "<i>"], answer: 0 },
             { question: "What is the correct HTML for creating a radio button?", options: ["<input type='radio'>", "<radio>", "<input radio>", "<radiobutton>"], answer: 0 },
             { question: "Which HTML tag is used to define a footer for a document?", options: ["<end>", "<bottom>", "<foot>", "<footer>"], answer: 3 },
@@ -94,6 +94,7 @@
         let currentQuestion = 0;
         let timeLeft = 30;
         let timer;
+        let score = 0;
 
         function startTimer() {
             timeLeft = 30;
@@ -104,7 +105,7 @@
                 if (timeLeft <= 0) {
                     clearInterval(timer);
                     document.querySelectorAll(".option").forEach(btn => btn.disabled = true);
-                    document.querySelector(".next-btn").style.display = "block"; // Show next button when time runs out
+                    document.querySelector(".next-btn").style.display = "block";
                 }
             }, 1000);
         }
@@ -128,6 +129,7 @@
         function checkAnswer(index) {
             clearInterval(timer);
             const correctIndex = questions[currentQuestion].answer;
+            if (index === correctIndex) score++;
             document.querySelectorAll(".option").forEach((btn, i) => {
                 btn.disabled = true;
                 if (i === correctIndex) btn.classList.add("correct");
@@ -141,7 +143,10 @@
             if (currentQuestion < questions.length) {
                 loadQuestion();
             } else {
-                document.querySelector(".quiz-container").innerHTML = "<h2>Quiz Completed!</h2>";
+                document.querySelector(".quiz-container").innerHTML = `<h2>Quiz Completed!</h2>
+                <p>Your Score: ${score} / 20</p>
+                <p>Correct Answers: ${score}</p>
+                <p>Incorrect Answers: ${20 - score}</p>`;
             }
         }
 
